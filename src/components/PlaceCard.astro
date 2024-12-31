@@ -1,0 +1,53 @@
+---
+import type { Place } from "@prisma/client";
+import Star from "./Star.astro";
+
+interface Props {
+    place: Place;
+}
+
+const { place } = Astro.props;
+
+const { id, title, description, avg_rating } = place;
+
+const imageUrl = `/assets/images/${place.image}`;
+---
+
+<!-- component --><!-- component --><!-- This is an example component -->
+<div class="max-w-2xl mx-auto">
+    <div
+        class="bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700"
+    >
+        <a href={`/place/${id}`}>
+            <img class="rounded-t-lg p-8" src={imageUrl} alt={title} />
+        </a>
+        <div class="px-5 pb-5">
+            <h3
+                class="text-gray-900 font-semibold text-xl tracking-tight dark:text-white"
+            >
+                {title}
+            </h3>
+            <p class="text-neutral-300">
+                {description}
+            </p>
+            <div class="flex items-center mt-2.5 mb-5">
+                <div class="flex gap-1">
+                    {
+                        Array.from({ length: avg_rating.toNumber() }).map(
+                            (item) => <Star />,
+                        )
+                    }
+                </div>
+                <span
+                    class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3"
+                    >{avg_rating}</span
+                >
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="text-3xl font-bold text-gray-900 dark:text-white"
+                    >{avg_rating}</span
+                >
+            </div>
+        </div>
+    </div>
+</div>

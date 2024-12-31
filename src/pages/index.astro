@@ -1,11 +1,15 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { actions } from "astro:actions";
+import PlaceCard from "../components/PlaceCard.astro";
+import Layout from "../layouts/Layout.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const { data, error } = await Astro.callAction(actions.getPlaces, "");
 ---
 
 <Layout>
-	<Welcome />
+	<h1>Lugares</h1>
+
+	<div class="grid grid-cols-3 align-content-center gap-4 mx-auto">
+		{data && data.map((place) => <PlaceCard place={place} />)}
+	</div>
 </Layout>
